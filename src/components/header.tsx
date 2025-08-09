@@ -5,6 +5,7 @@ import Image from "next/image";
 import GOOGLE_SHEETS_API_KEY from "@/config/googleApiKey";
 import { SPREADSHEET_ID, SHEET_NAME_HEADER } from "@/config/idSheets";
 import { MapPin, Clock } from "lucide-react";
+import Link from "next/link";
 
 const HEADER_RANGE = `${SHEET_NAME_HEADER}!A2:M2`;
 
@@ -112,35 +113,47 @@ export default function Header() {
 
       {/* Contenido principal */}
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between py-3 px-4 gap-3">
-        {/* Logo Izquierdo */}
-        <Image
-          src={header?.LogoIzq || "/LogoJac.png"}
-          alt="Logo Izquierdo"
-          width={90}
-          height={90}
-          className="object-contain"
-        />
+        {/* Contenido principal */}
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between py-3 px-4 gap-3">
+          {/* Logo Izquierdo con link a "/" */}
+          <Link href="/" aria-label="Inicio">
+            <Image
+              src={header?.LogoIzq || "/LogoJac.png"}
+              alt="Logo Izquierdo"
+              width={90}
+              height={90}
+              className="object-contain cursor-pointer transition-transform duration-300 hover:scale-105"
+            />
+          </Link>
 
-        {/* Texto Central */}
-        <div className="flex flex-col items-center text-center">
-          <h1 className="text-lg md:text-2xl font-bold text-gray-900 dark:text-white">{nombreOac}</h1>
-          <p className="italic text-sm md:text-base text-gray-700 dark:text-gray-300">{header?.Lema || "Trabajando por la comunidad"}</p>
-          <div className="text-xs text-gray-600 dark:text-gray-400 leading-tight">
-            <div>{header?.NumeroNit && `NIT: ${header.NumeroNit}`}</div>
-            <div>{header?.NumeroPersoneria && `Personería Jurídica ${header.NumeroPersoneria}`}</div>
-            <div>{header?.NumeroRuc && `RUC: ${header.NumeroRuc}`}</div>
-            <div>{header?.Ciudad}, {header?.Departamento}</div>
+          {/* Texto Central */}
+          <div className="flex flex-col items-center text-center">
+            <h1 className="text-lg md:text-2xl font-bold text-gray-900 dark:text-white">{nombreOac}</h1>
+            <p className="italic text-sm md:text-base text-gray-700 dark:text-gray-300">{header?.Lema || "Trabajando por la comunidad"}</p>
+            <div className="text-xs text-gray-600 dark:text-gray-400 leading-tight">
+              <div>{header?.NumeroNit && `NIT: ${header.NumeroNit}`}</div>
+              <div>{header?.NumeroPersoneria && `Personería Jurídica ${header.NumeroPersoneria}`}</div>
+              <div>{header?.NumeroRuc && `RUC: ${header.NumeroRuc}`}</div>
+              <div>{header?.Ciudad}, {header?.Departamento}</div>
+            </div>
           </div>
-        </div>
 
-        {/* Logo Derecho */}
-        <Image
-          src={header?.LogoDer || "/LogoComunal.png"}
-          alt="Logo Derecho"
-          width={70}
-          height={70}
-          className="object-contain"
-        />
+          {/* Logo Derecho con link a Confederación en pestaña nueva */}
+          <a
+            href="https://confederacionnacionaldeaccioncomunal.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Confederación Nacional de Acción Comunal"
+          >
+            <Image
+              src={header?.LogoDer || "/LogoComunal.png"}
+              alt="Logo Derecho"
+              width={70}
+              height={70}
+              className="object-contain cursor-pointer transition-transform duration-300 hover:scale-110"
+            />
+          </a>
+        </div>
       </div>
     </header>
   );
