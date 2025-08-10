@@ -2,7 +2,6 @@
 
 import React from "react";
 import { MapPin, Phone, Mail } from "lucide-react";
-import ContactForm from "@/components/ContactForm";
 
 export default function ContactsPage() {
   // Aquí puedes agregar la lógica para obtener la información de contacto de Google Sheets,
@@ -66,12 +65,6 @@ export default function ContactsPage() {
               </p>
             </div>
           </div>
-        </div>
-
-        {/* Sección de Formulario de Contacto */}
-        <div className="mt-12 bg-white dark:bg-[#1a1a1a] p-8 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-900 dark:text-white text-center">Envíanos un mensaje</h3>
-          <ContactForm />
         </div>
       </div>
     </div>
