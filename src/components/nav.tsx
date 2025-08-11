@@ -2,12 +2,29 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from 'next/navigation';
 
 export default function Nav() {
   const [menuAbierto, setMenuAbierto] = useState(false);
+  const router = useRouter();
 
   // Estilo para los botones destacados
   const btnDestacado = "px-4 py-1 rounded-md font-semibold text-white bg-blue-700 hover:bg-blue-800 dark:bg-blue-500 dark:hover:bg-blue-600 transition";
+
+  const navLinks = [
+    { href: "/", text: "Inicio" },
+    { href: "/sobre-nosotros", text: "Sobre nosotros" },
+    { href: "/noticias", text: "Noticias y Comunicados" },
+    { href: "/comisiones", text: "Comisiones de Trabajo" },
+    { href: "/servicios", text: "Servicios y Trámites" },
+    { href: "/eventos", text: "Eventos y Actividades" },
+    { href: "/contacto", text: "Contacto" },
+  ];
+
+  const handleLinkClick = (href: string) => {
+    setMenuAbierto(false);
+    router.push(href);
+  };
 
   return (
     <nav className="w-full bg-white dark:bg-[#23232a] border-b border-gray-200 dark:border-gray-700 shadow-sm">
@@ -22,52 +39,16 @@ export default function Nav() {
 
           {/* Menú desktop */}
           <div className="hidden md:flex space-x-8 text-sm items-center">
-            <Link href="/" className="font-semibold hover:text-blue-700 dark:hover:text-blue-300">
-              Inicio
-            </Link>
-
-            <div className="relative group">
-              <button
-                type="button"
-                className="font-semibold hover:text-blue-700 dark:hover:text-blue-300 flex items-center gap-1"
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href!}
+                className="font-semibold hover:text-blue-700 dark:hover:text-blue-300"
+                onClick={() => handleLinkClick(link.href!)}
               >
-                La OAC
-                <svg className="w-3 h-3 mt-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              {/* Submenú */}
-              <div className="absolute top-full left-0 mt-1 bg-white dark:bg-[#23232a] border border-gray-200 dark:border-gray-700 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none group-hover:pointer-events-auto z-10 min-w-[180px]">
-                <Link href="/quienes-somos" className="block px-4 py-2 text-sm hover:bg-blue-100 dark:hover:bg-blue-700" onClick={() => setMenuAbierto(false)}>
-                  Quiénes somos
-                </Link>
-                <Link href="/historia" className="block px-4 py-2 text-sm hover:bg-blue-100 dark:hover:bg-blue-700" onClick={() => setMenuAbierto(false)}>
-                  Historia
-                </Link>
-                <Link href="/mision" className="block px-4 py-2 text-sm hover:bg-blue-100 dark:hover:bg-blue-700" onClick={() => setMenuAbierto(false)}>
-                  Misión
-                </Link>
-                <Link href="/vision" className="block px-4 py-2 text-sm hover:bg-blue-100 dark:hover:bg-blue-700" onClick={() => setMenuAbierto(false)}>
-                  Visión
-                </Link>
-              </div>
-            </div>
-
-            <Link href="/noticias" className="font-semibold hover:text-blue-700 dark:hover:text-blue-300">
-              Noticias y Comunicados
-            </Link>
-            <Link href="/comisiones" className="font-semibold hover:text-blue-700 dark:hover:text-blue-300">
-              Comisiones de Trabajo
-            </Link>
-            <Link href="/servicios" className="font-semibold hover:text-blue-700 dark:hover:text-blue-300">
-              Servicios y Trámites
-            </Link>
-            <Link href="/eventos" className="font-semibold hover:text-blue-700 dark:hover:text-blue-300">
-              Eventos y Actividades
-            </Link>
-            <Link href="/contacto" className="font-semibold hover:text-blue-700 dark:hover:text-blue-300">
-              Contacto
-            </Link>
+                {link.text}
+              </a>
+            ))}
 
             {/* Botones destacados */}
             <Link href="/afiliate" className={btnDestacado}>
@@ -82,7 +63,7 @@ export default function Nav() {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setMenuAbierto(!menuAbierto)}
-              aria-label="Abrir menú"
+              aria-label="Abrir menú de navegación"
               aria-expanded={menuAbierto}
               className="text-[#19295A] dark:text-white focus:outline-none text-2xl"
             >
@@ -95,45 +76,16 @@ export default function Nav() {
       {/* Menú móvil desplegable */}
       {menuAbierto && (
         <div className="md:hidden px-4 pb-6 text-sm space-y-2 bg-white dark:bg-[#23232a] border-t border-gray-200 dark:border-gray-700">
-          <Link href="/" className="block font-semibold hover:text-blue-700 dark:hover:text-blue-300" onClick={() => setMenuAbierto(false)}>
-            Inicio
-          </Link>
-
-          <details className="group">
-            <summary className="cursor-pointer font-semibold hover:text-blue-700 dark:hover:text-blue-300">
-              La OAC
-            </summary>
-            <div className="pl-4 mt-1 space-y-1">
-              <Link href="/quienes-somos" className="block hover:text-blue-700 dark:hover:text-blue-300" onClick={() => setMenuAbierto(false)}>
-                Quiénes somos
-              </Link>
-              <Link href="/historia" className="block hover:text-blue-700 dark:hover:text-blue-300" onClick={() => setMenuAbierto(false)}>
-                Historia
-              </Link>
-              <Link href="/mision" className="block hover:text-blue-700 dark:hover:text-blue-300" onClick={() => setMenuAbierto(false)}>
-                Misión
-              </Link>
-              <Link href="/vision" className="block hover:text-blue-700 dark:hover:text-blue-300" onClick={() => setMenuAbierto(false)}>
-                Visión
-              </Link>
-            </div>
-          </details>
-
-          <Link href="/noticias" className="block font-semibold hover:text-blue-700 dark:hover:text-blue-300" onClick={() => setMenuAbierto(false)}>
-            Noticias y Comunicados
-          </Link>
-          <Link href="/comisiones" className="block font-semibold hover:text-blue-700 dark:hover:text-blue-300" onClick={() => setMenuAbierto(false)}>
-            Comisiones de Trabajo
-          </Link>
-          <Link href="/servicios" className="block font-semibold hover:text-blue-700 dark:hover:text-blue-300" onClick={() => setMenuAbierto(false)}>
-            Servicios y Trámites
-          </Link>
-          <Link href="/eventos" className="block font-semibold hover:text-blue-700 dark:hover:text-blue-300" onClick={() => setMenuAbierto(false)}>
-            Eventos y Actividades
-          </Link>
-          <Link href="/contacto" className="block font-semibold hover:text-blue-700 dark:hover:text-blue-300" onClick={() => setMenuAbierto(false)}>
-            Contacto
-          </Link>
+          {navLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href!}
+              className="block font-semibold hover:text-blue-700 dark:hover:text-blue-300"
+              onClick={() => handleLinkClick(link.href!)}
+            >
+              {link.text}
+            </a>
+          ))}
 
           <Link href="/afiliate" className={`${btnDestacado} block text-center`} onClick={() => setMenuAbierto(false)}>
             Afíliate / Inscríbete

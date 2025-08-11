@@ -12,6 +12,7 @@ type FooterData = {
   BarrioVereda: string;
   LlamadasYWhatsapp: string;
   CorreoElectronico: string;
+  GoogleMapsLink: string;
 };
 
 function parseFooterRow(row: string[]): FooterData {
@@ -20,6 +21,7 @@ function parseFooterRow(row: string[]): FooterData {
     BarrioVereda: row[1] || "",
     LlamadasYWhatsapp: row[2] || "",
     CorreoElectronico: row[3] || "",
+    GoogleMapsLink: row[4] || "",
   };
 }
 
@@ -45,6 +47,8 @@ export default function ContactsPage() {
   const direccion = footer?.DireccionSede || "Dirección de la Sede";
   const llamadas = footer?.LlamadasYWhatsapp || "+57 3XX XXX XXXX";
   const correo = footer?.CorreoElectronico || "info@jacrosablanca.org";
+  const googleMapsLink =
+    footer?.GoogleMapsLink || "https://maps.app.goo.gl/AUsGC9NXH1oDhmLR6";
 
   return (
     <div className="w-full py-16">
@@ -57,7 +61,7 @@ export default function ContactsPage() {
         <div className="flex flex-col md:flex-row items-stretch justify-center gap-4">
           {/* Tarjeta de Dirección */}
           <a
-            href="https://maps.app.goo.gl/AUsGC9NXH1oDhmLR6"
+            href={googleMapsLink}
             target="_blank"
             rel="noopener noreferrer"
             // Color de fondo de la tarjeta y efecto al pasar el mouse

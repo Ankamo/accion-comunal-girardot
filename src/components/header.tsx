@@ -106,7 +106,7 @@ export default function Header() {
   return (
     <header className="w-full bg-white dark:bg-[#23232a] shadow-md border-b border-gray-200 dark:border-gray-700">
       {/* Barra superior */}
-      <div className="bg-green-600 text-white text-xs flex justify-between px-4 py-1">
+      <div className="bg-gray-800 text-white text-xs flex justify-between px-4 py-1">
         <span className="flex items-center gap-1"><MapPin size={14} /> {ciudad}</span>
         <span className="flex items-center gap-1"><Clock size={14} /> {hora}</span>
       </div>
