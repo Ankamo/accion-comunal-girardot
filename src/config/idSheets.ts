@@ -20,6 +20,11 @@ export const SHEET_NAME_CARTELERA = 'Cartelera'; // Asegúrate de que este sea e
 export const SPREADSHEET_ID_PROYECTOS = '1G78mQ00liuf4s8889uoPf3_eYR3ySwTm1x8Vg8UvNPA';
 export const SHEET_NAME_PROYECTOS = 'Proyectos'; // Asegúrate de que este sea el nombre correcto de tu pestaña
 
+// EquipoJac/
+export const SPREADSHEET_ID_EQUIPO = '1NriapKLWWq40UfOmf6oz5yw1iXyij4-n7vbWAvXAnaE';
+export const SHEET_NAME_EQUIPO = 'Equipo'; // Asegúrate de que este sea el nombre correcto de tu pestaña
+
+
 
 
 
