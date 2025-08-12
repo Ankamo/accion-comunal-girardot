@@ -60,10 +60,13 @@ export default function EquipoPage() {
         {Object.entries(grupos).map(([organo, miembros]) => (
           <section key={organo}>
             <h2 className="text-3xl font-bold mb-6 text-center">
-              {organo.trim().toLowerCase() === "dirección"
-                ? `Junta Directiva – Órgano de ${organo}`
-                : `Dignatarios – Órgano de ${organo}`}
-            </h2>
+  {organo.trim().toLowerCase() === "dirección"
+    ? `Junta Directiva – Órgano de ${organo.replace(/^Órgano de\s*/i, "")}`
+    : organo.trim().toLowerCase().startsWith("órgano de")
+      ? `Dignatarios – ${organo}`
+      : `Dignatarios – Órgano de ${organo}`}
+</h2>
+
             <div className="flex flex-wrap justify-center gap-6">
               {miembros.map((miembro, idx) => (
                 <div
