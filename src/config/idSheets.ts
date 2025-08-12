@@ -8,6 +8,10 @@ export const SHEET_NAME_HEADER = 'Header'; // Asegúrate de que este sea el nomb
 export const SHEET_NAME_FOOTER = 'Footer'; // Asegúrate de que este sea el nombre correcto de tu pestaña
 export const SHEET_NAME_REDES = 'Redes Sociales'; // Asegúrate de que este sea el nombre correcto de tu pestaña
 
+// SobreNosotros/
+export const SPREADSHEET_ID_NOSOTROS = '1omG7qCrgcL7uSb7-2hbK7218f4wxQalxD8daKZRyHv0';
+export const SHEET_NAME_NOSOTROS = 'Sobre Nosotros'; // Asegúrate de que este sea el nombre correcto de tu pestaña
+
 // CarteleraJac/
 export const SPREADSHEET_ID_CARTELERA = '18At-UfafKNT-bPo1cK69ScHaf07E1yUKELYO6TWfSeo';
 export const SHEET_NAME_CARTELERA = 'Cartelera'; // Asegúrate de que este sea el nombre correcto de tu pestaña
