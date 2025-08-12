@@ -24,8 +24,9 @@ export const SHEET_NAME_PROYECTOS = 'Proyectos'; // Asegúrate de que este sea e
 export const SPREADSHEET_ID_EQUIPO = '1NriapKLWWq40UfOmf6oz5yw1iXyij4-n7vbWAvXAnaE';
 export const SHEET_NAME_EQUIPO = 'Equipo'; // Asegúrate de que este sea el nombre correcto de tu pestaña
 
-
-
+// ActividadesJac/
+export const SPREADSHEET_ID_ACTIVIDADES = '13sVd9xwEeK357MQp61zTzSciEG3GoWFRoR18llxlYiA';
+export const SHEET_NAME_ACTIVIDADES = 'Actividades'; // Asegúrate de que este sea el nombre correcto de tu pestaña
 
 
 

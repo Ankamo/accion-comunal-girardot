@@ -17,7 +17,7 @@ export default function Nav() {
     { href: "/proyectos", text: "Proyectos" },
     { href: "/equipo", text: "Equipo de Dignatarios" },
     { href: "/servicios", text: "Servicios y Trámites" },
-    { href: "/eventos", text: "Eventos y Actividades" },
+    { href: "/actividades", text: "Eventos y Actividades" },
     { href: "/contacto", text: "Contacto" },
   ];
 
