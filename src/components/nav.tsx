@@ -14,8 +14,8 @@ export default function Nav() {
   const navLinks = [
     { href: "/", text: "Inicio" },
     { href: "/sobre-nosotros", text: "Sobre nosotros" },
-    { href: "/noticias", text: "Noticias y Comunicados" },
-    { href: "/comisiones", text: "Comisiones de Trabajo" },
+    { href: "/proyectos", text: "Proyectos" },
+    { href: "/equipo", text: "Equipo de Dignatarios" },
     { href: "/servicios", text: "Servicios y Trámites" },
     { href: "/eventos", text: "Eventos y Actividades" },
     { href: "/contacto", text: "Contacto" },

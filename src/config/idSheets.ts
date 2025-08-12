@@ -17,7 +17,7 @@ export const SPREADSHEET_ID_CARTELERA = '18At-UfafKNT-bPo1cK69ScHaf07E1yUKELYO6T
 export const SHEET_NAME_CARTELERA = 'Cartelera'; // Asegúrate de que este sea el nombre correcto de tu pestaña
 
 // proyectosJac/
-export const SPREADSHEET_ID_PROYECTOS = '18At-UfafKNT-bPo1cK69ScHaf07E1yUKELYO6TWfSeoA';
+export const SPREADSHEET_ID_PROYECTOS = '1G78mQ00liuf4s8889uoPf3_eYR3ySwTm1x8Vg8UvNPA';
 export const SHEET_NAME_PROYECTOS = 'Proyectos'; // Asegúrate de que este sea el nombre correcto de tu pestaña
 
 
