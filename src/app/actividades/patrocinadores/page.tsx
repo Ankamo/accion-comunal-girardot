@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { SPREADSHEET_ID_PATROCINADORES, SHEET_NAME_PATROCINADORES } from "@/config/idSheets";
-import GOOGLE_SHEETS_API_KEY from "@/config/googleApiKey"; // Importa la clave API
+import GOOGLE_SHEETS_API_KEY from "@/config/googleApiKey";
 
 // Define el tipo para cada patrocinador
 type Patrocinador = {
@@ -16,6 +16,15 @@ type Patrocinador = {
   Web?: string;
   Facebook?: string;
   RedesSociales?: string;
+};
+
+// Función auxiliar para limpiar celdas de errores o espacios extra
+const cleanCell = (value: string): string => {
+  if (!value) return "";
+  if (/^#(NAME|REF|VALUE|DIV|N\/A)[!?/]*/i.test(value)) {
+    return "";
+  }
+  return value.trim();
 };
 
 // Función auxiliar para asegurarse de que las URL tengan un protocolo (https://)
@@ -69,15 +78,6 @@ export default function PatrocinadoresPage() {
   const SHEET_URL =
     `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID_PATROCINADORES}/values/${PATROCINADORES_RANGE}?key=${GOOGLE_SHEETS_API_KEY}`;
   
-  // Función para limpiar celdas de errores de Google Sheets o espacios extra
-  const cleanCell = (value: string): string => {
-    if (!value) return "";
-    if (/^#(NAME|REF|VALUE|DIV|N\/A)[!?/]*/i.test(value)) {
-      return "";
-    }
-    return value.trim();
-  };
-
   // Manejador de clic en la imagen para abrir el modal
   const handleImageClick = (imageUrl: string) => {
     setIsImageLoading(true);
@@ -122,12 +122,12 @@ export default function PatrocinadoresPage() {
             });
 
             return {
-              Logo: rowObj["LOGO"] || "/LogoJac.png", // Corregido: LOGO en lugar de LOGONEGOCIO
+              Logo: rowObj["LOGO"] || "/LogoJac.png",
               Negocio: rowObj["NEGOCIO"] || "Negocio Desconocido",
               Administrador: rowObj["ADMINISTRADOR"] || "Administrador Desconocido",
               Direccion: rowObj["DIRECCION"] || "Sin dirección.",
               Contacto: rowObj["CONTACTO"] || "Sin contacto",
-              Correo: rowObj["CORREO"] || "Sin correo", // Corregido: CORREO en lugar de CORREO ELECTRONICO
+              Correo: rowObj["CORREO"] || "Sin correo",
               Web: rowObj["WEB"] || "",
               Facebook: rowObj["FACEBOOK"] || "",
               RedesSociales: rowObj["REDES SOCIALES"] || "",
@@ -148,7 +148,7 @@ export default function PatrocinadoresPage() {
   }, [SHEET_URL]);
 
   return (
-    <div className=" min-h-screen font-sans">
+    <div className="min-h-screen font-sans">
       <div className="max-w-6xl mx-auto py-12 px-6">
         <h1 className="text-4xl font-extrabold text-center text-[#19295A] dark:text-blue-200 mb-8">
           Nuestros Patrocinadores
@@ -200,7 +200,15 @@ export default function PatrocinadoresPage() {
               <div className="mt-4 text-sm text-gray-700 dark:text-gray-200 space-y-1 w-full">
                 {patrocinador.Direccion && <p><strong>Dirección:</strong> {patrocinador.Direccion}</p>}
                 {patrocinador.Contacto && <p><strong>Contacto:</strong> {patrocinador.Contacto}</p>}
-                {patrocinador.Correo && <p><strong>Email:</strong> <a href={`mailto:${patrocinador.Correo}`} className="text-blue-600 dark:text-blue-400 hover:underline">{patrocinador.Correo}</a></p>}
+                {/* *** CAMBIO CLAVE AQUÍ: Uso de un enlace de correo electrónico *** */}
+                {patrocinador.Correo && (
+                  <p>
+                    <strong>Email:</strong>{" "}
+                    <a href={`mailto:${patrocinador.Correo}`} className="text-blue-600 dark:text-blue-400 hover:underline">
+                      {patrocinador.Correo}
+                    </a>
+                  </p>
+                )}
               </div>
 
               <SocialIcons patrocinador={patrocinador} />
