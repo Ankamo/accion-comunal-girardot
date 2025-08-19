@@ -18,6 +18,8 @@ type Actividad = {
   LinkFacebook?: string; // Columna 'Link Facebook'
   Donar?: string; // Nueva columna 'Donar' (texto del botón)
   LinkDonar?: string; // Nueva columna 'Link Donar' (URL de donación)
+  Patrocinadores?: string; // Nueva columna 'Patrocinadores' (opcional)
+  VerPatrocinadores?: string; // Nueva columna 'Ver Patrocinadores' (opcional)
 };
 
 export default function ActividadesPage() {
@@ -28,7 +30,7 @@ export default function ActividadesPage() {
   const [isImageLoading, setIsImageLoading] = useState<boolean>(false); // Estado de carga para la imagen del modal
 
   // Define el rango de la hoja de cálculo, ahora hasta la columna J para incluir las nuevas columnas
-  const ACTIVIDADES_RANGE = `${SHEET_NAME_ACTIVIDADES}!A1:J`;
+  const ACTIVIDADES_RANGE = `${SHEET_NAME_ACTIVIDADES}!A1:L`;
 
   // URL para obtener datos de Google Sheets API en formato JSON
   const SHEET_URL =
@@ -98,6 +100,8 @@ export default function ActividadesPage() {
               LinkFacebook: rowObj["Link Facebook"] || "",
               Donar: rowObj["Donar"] || "",
               LinkDonar: rowObj["Link Donar"] || "",
+              Patrocinadores: rowObj["Patrocinadores"] || "",
+              VerPatrocinadores: rowObj["Ver Patrocinadores"] || "",
             };
           });
           setActividades(parsedActividades);
@@ -202,6 +206,16 @@ export default function ActividadesPage() {
                     className="inline-flex items-center justify-center w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-semibold text-center"
                   >
                     {actividad.Donar}
+                  </Link>
+                )}
+                {actividad.Patrocinadores && actividad.VerPatrocinadores && (
+                  <Link
+                    href={actividad.VerPatrocinadores}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-semibold text-center"
+                  >
+                    {actividad.Patrocinadores}
                   </Link>
                 )}
               </div>
