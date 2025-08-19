@@ -28,5 +28,11 @@ export const SHEET_NAME_EQUIPO = 'Equipo'; // Asegúrate de que este sea el nomb
 export const SPREADSHEET_ID_ACTIVIDADES = '13sVd9xwEeK357MQp61zTzSciEG3GoWFRoR18llxlYiA';
 export const SHEET_NAME_ACTIVIDADES = 'Actividades'; // Asegúrate de que este sea el nombre correcto de tu pestaña
 
+// PatrocinadoresJac/
+export const SPREADSHEET_ID_PATROCINADORES = '13sVd9xwEeK357MQp61zTzSciEG3GoWFRoR18llxlYiA';
+export const SHEET_NAME_PATROCINADORES = 'Patrocinadores'; // Asegúrate de que este sea el nombre correcto de tu pestaña
+
+
+
 
 
