@@ -34,6 +34,9 @@ export default function ActividadesPage() {
   const [availableYears, setAvailableYears] = useState<string[]>([]);
   const [selectedType, setSelectedType] = useState<string>("Todas las actividades");
   const [availableTypes, setAvailableTypes] = useState<string[]>([]);
+  const [selectedPlace, setSelectedPlace] = useState<string>("Todos los lugares");
+  const [availablePlaces, setAvailablePlaces] = useState<string[]>([]);
+
 
   // Define el rango de la hoja de cálculo, ahora hasta la columna J para incluir las nuevas columnas
   const ACTIVIDADES_RANGE = `${SHEET_NAME_ACTIVIDADES}!A1:L`;
@@ -129,10 +132,19 @@ export default function ActividadesPage() {
           ));
           setAvailableTypes(["Todas las actividades", ...types]);
           
+          // **Extracción de lugares únicos para el filtro**
+          const places = Array.from(new Set(
+            parsedActividades
+              .map(act => act.Lugar)
+              .filter(lugar => lugar)
+          ));
+          setAvailablePlaces(["Todos los lugares", ...places]);
+
         } else {
           setActividades([]); // No hay datos o solo encabezados
           setAvailableYears([]); // No hay años disponibles
           setAvailableTypes([]); // No hay tipos disponibles
+          setAvailablePlaces([]); // No hay lugares disponibles
         }
       } catch (err) {
         console.error("Error cargando actividades:", err);
@@ -148,7 +160,8 @@ export default function ActividadesPage() {
   const filteredActividades = actividades.filter(actividad => {
     const yearMatch = selectedYear === "Todos los años" || actividad.Fecha.split(" ").pop() === selectedYear;
     const typeMatch = selectedType === "Todas las actividades" || actividad.Tipo === selectedType;
-    return yearMatch && typeMatch;
+    const placeMatch = selectedPlace === "Todos los lugares" || actividad.Lugar === selectedPlace;
+    return yearMatch && typeMatch && placeMatch;
   });
 
   return (
@@ -158,7 +171,7 @@ export default function ActividadesPage() {
       </h1>
 
       {/* **CONTENEDOR DE FILTROS** */}
-      {!loading && !error && (availableYears.length > 1 || availableTypes.length > 1) && (
+      {!loading && !error && (availableYears.length > 1 || availableTypes.length > 1 || availablePlaces.length > 1) && (
         <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4 mb-8">
           {/* Selector de Años */}
           {availableYears.length > 1 && (
@@ -193,6 +206,24 @@ export default function ActividadesPage() {
               </select>
             </div>
           )}
+          
+          {/* Selector de Lugares */}
+          {availablePlaces.length > 1 && (
+            <div className="flex items-center space-x-2">
+              <label htmlFor="place-filter" className="text-gray-700 dark:text-gray-300 font-semibold">Lugar:</label>
+              <select
+                id="place-filter"
+                value={selectedPlace}
+                onChange={(e) => setSelectedPlace(e.target.value)}
+                className="p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              >
+                {availablePlaces.map(place => (
+                  <option key={place} value={place}>{place}</option>
+                ))}
+              </select>
+            </div>
+          )}
+
         </div>
       )}
 
