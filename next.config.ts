@@ -1,12 +1,33 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  /* config options here */
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   images: {
-    // Aquí se añaden los dominios desde los cuales se cargarán las imágenes.
-    // 'placehold.co' es el dominio del marcador de posición que estábamos usando.
-    // Si usas imágenes de otros sitios, debes añadirlos aquí también.
-    domains: ["placehold.co"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "drive.google.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "scontent.xx.fbcdn.net",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "pbs.twimg.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "scontent.cdninstagram.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "www.facebook.com", // This is the new line you need to add
+        pathname: "/**",
+      },
+    ],
   },
 };
 

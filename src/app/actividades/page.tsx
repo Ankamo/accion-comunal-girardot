@@ -26,15 +26,19 @@ export default function ActividadesPage() {
   const [actividades, setActividades] = useState<Actividad[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null); // Estado para la imagen del modal
-  const [isImageLoading, setIsImageLoading] = useState<boolean>(false); // Estado de carga para la imagen del modal
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [isImageLoading, setIsImageLoading] = useState<boolean>(false);
+
+  // **NUEVOS ESTADOS PARA EL FILTRO**
+  const [selectedYear, setSelectedYear] = useState<string>("Todos los años");
+  const [availableYears, setAvailableYears] = useState<string[]>([]);
 
   // Define el rango de la hoja de cálculo, ahora hasta la columna J para incluir las nuevas columnas
   const ACTIVIDADES_RANGE = `${SHEET_NAME_ACTIVIDADES}!A1:L`;
 
   // URL para obtener datos de Google Sheets API en formato JSON
   const SHEET_URL =
-    `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID_ACTIVIDADES}/values/${ACTIVIDADES_RANGE}?key=${ GOOGLE_SHEETS_API_KEY}`;
+    `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID_ACTIVIDADES}/values/${ACTIVIDADES_RANGE}?key=${GOOGLE_SHEETS_API_KEY}`;
 
   // Función para limpiar celdas de errores de Google Sheets o espacios extra
   const cleanCell = (value: string): string => {
@@ -105,8 +109,19 @@ export default function ActividadesPage() {
             };
           });
           setActividades(parsedActividades);
+
+          // **Extracción de años únicos para el filtro**
+          const years = Array.from(new Set(
+            parsedActividades
+              .map(act => act.Fecha)
+              .filter(fecha => fecha)
+              .map(fecha => fecha.split(" ").pop()!)
+          )).sort((a, b) => parseInt(b) - parseInt(a));
+          setAvailableYears(["Todos los años", ...years]);
+          
         } else {
           setActividades([]); // No hay datos o solo encabezados
+          setAvailableYears([]); // No hay años disponibles
         }
       } catch (err) {
         console.error("Error cargando actividades:", err);
@@ -118,11 +133,37 @@ export default function ActividadesPage() {
     fetchActividades();
   }, [SHEET_URL]);
 
+  // **FILTRADO DE ACTIVIDADES**
+  const filteredActividades = actividades.filter(actividad => {
+    if (selectedYear === "Todos los años") {
+      return true;
+    }
+    const actividadYear = actividad.Fecha.split(" ").pop();
+    return actividadYear === selectedYear;
+  });
+
   return (
     <div className="max-w-6xl mx-auto py-12 px-6">
       <h1 className="text-4xl font-extrabold text-center text-[#19295A] dark:text-blue-200 mb-8">
         Nuestras Actividades
       </h1>
+
+      {/* **SELECTOR DE AÑOS** */}
+      {!loading && !error && availableYears.length > 1 && (
+        <div className="flex justify-center mb-8">
+          <label htmlFor="year-filter" className="sr-only">Filtrar por año</label>
+          <select
+            id="year-filter"
+            value={selectedYear}
+            onChange={(e) => setSelectedYear(e.target.value)}
+            className="p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+          >
+            {availableYears.map(year => (
+              <option key={year} value={year}>{year}</option>
+            ))}
+          </select>
+        </div>
+      )}
 
       {loading && (
         <p className="text-center text-gray-500 dark:text-gray-400">Cargando actividades...</p>
@@ -132,15 +173,21 @@ export default function ActividadesPage() {
         <p className="text-center text-red-500 dark:text-red-400">Error: {error}</p>
       )}
 
+      {!loading && !error && filteredActividades.length === 0 && selectedYear !== "Todos los años" && (
+        <p className="text-center text-gray-500 dark:text-gray-400">
+          No hay actividades registradas para el año {selectedYear}.
+        </p>
+      )}
+
       {!loading && !error && actividades.length === 0 && (
         <p className="text-center text-gray-500 dark:text-gray-400">
           No hay actividades registradas en este momento.
         </p>
       )}
 
-      {/* Grid de actividades */}
+      {/* Grid de actividades, ahora usando la lista filtrada */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {actividades.map((actividad, idx) => (
+        {filteredActividades.map((actividad, idx) => (
           <div
             key={idx}
             className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 flex flex-col"
@@ -201,8 +248,6 @@ export default function ActividadesPage() {
                 {actividad.Donar && actividad.LinkDonar && (
                   <Link
                     href={actividad.LinkDonar}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className="inline-flex items-center justify-center w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-semibold text-center"
                   >
                     {actividad.Donar}
@@ -211,8 +256,6 @@ export default function ActividadesPage() {
                 {actividad.Patrocinadores && actividad.VerPatrocinadores && (
                   <Link
                     href={actividad.VerPatrocinadores}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className="inline-flex items-center justify-center w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-semibold text-center"
                   >
                     {actividad.Patrocinadores}
@@ -228,11 +271,11 @@ export default function ActividadesPage() {
       {selectedImage && (
         <div 
           className="fixed inset-0 z-50 bg-black bg-opacity-75 flex justify-center items-center p-4"
-          onClick={handleCloseModal} // Cierra el modal al hacer clic fuera de la imagen
+          onClick={handleCloseModal}
         >
           <div 
             className="relative max-w-[95vw] max-h-[95vh] w-full h-full"
-            onClick={(e) => e.stopPropagation()} // Evita que el clic en la imagen cierre el modal
+            onClick={(e) => e.stopPropagation()}
           >
             {isImageLoading ? (
               <div className="flex justify-center items-center w-full h-full text-white">
@@ -243,7 +286,7 @@ export default function ActividadesPage() {
                 src={selectedImage}
                 alt="Imagen ampliada"
                 layout="fill"
-                objectFit="contain" // Muestra la imagen completa sin recortar
+                objectFit="contain"
                 className="rounded-lg shadow-xl"
               />
             )}
