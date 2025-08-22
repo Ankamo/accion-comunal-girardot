@@ -29,9 +29,11 @@ export default function ActividadesPage() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isImageLoading, setIsImageLoading] = useState<boolean>(false);
 
-  // **NUEVOS ESTADOS PARA EL FILTRO**
+  // **ESTADOS PARA LOS FILTROS**
   const [selectedYear, setSelectedYear] = useState<string>("Todos los años");
   const [availableYears, setAvailableYears] = useState<string[]>([]);
+  const [selectedType, setSelectedType] = useState<string>("Todas las actividades");
+  const [availableTypes, setAvailableTypes] = useState<string[]>([]);
 
   // Define el rango de la hoja de cálculo, ahora hasta la columna J para incluir las nuevas columnas
   const ACTIVIDADES_RANGE = `${SHEET_NAME_ACTIVIDADES}!A1:L`;
@@ -119,9 +121,18 @@ export default function ActividadesPage() {
           )).sort((a, b) => parseInt(b) - parseInt(a));
           setAvailableYears(["Todos los años", ...years]);
           
+          // **Extracción de tipos de actividad únicos para el filtro**
+          const types = Array.from(new Set(
+            parsedActividades
+              .map(act => act.Tipo)
+              .filter(tipo => tipo)
+          ));
+          setAvailableTypes(["Todas las actividades", ...types]);
+          
         } else {
           setActividades([]); // No hay datos o solo encabezados
           setAvailableYears([]); // No hay años disponibles
+          setAvailableTypes([]); // No hay tipos disponibles
         }
       } catch (err) {
         console.error("Error cargando actividades:", err);
@@ -133,13 +144,11 @@ export default function ActividadesPage() {
     fetchActividades();
   }, [SHEET_URL]);
 
-  // **FILTRADO DE ACTIVIDADES**
+  // **FILTRADO DE ACTIVIDADES COMBINADO**
   const filteredActividades = actividades.filter(actividad => {
-    if (selectedYear === "Todos los años") {
-      return true;
-    }
-    const actividadYear = actividad.Fecha.split(" ").pop();
-    return actividadYear === selectedYear;
+    const yearMatch = selectedYear === "Todos los años" || actividad.Fecha.split(" ").pop() === selectedYear;
+    const typeMatch = selectedType === "Todas las actividades" || actividad.Tipo === selectedType;
+    return yearMatch && typeMatch;
   });
 
   return (
@@ -148,20 +157,42 @@ export default function ActividadesPage() {
         Nuestras Actividades
       </h1>
 
-      {/* **SELECTOR DE AÑOS** */}
-      {!loading && !error && availableYears.length > 1 && (
-        <div className="flex justify-center mb-8">
-          <label htmlFor="year-filter" className="sr-only">Filtrar por año</label>
-          <select
-            id="year-filter"
-            value={selectedYear}
-            onChange={(e) => setSelectedYear(e.target.value)}
-            className="p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-          >
-            {availableYears.map(year => (
-              <option key={year} value={year}>{year}</option>
-            ))}
-          </select>
+      {/* **CONTENEDOR DE FILTROS** */}
+      {!loading && !error && (availableYears.length > 1 || availableTypes.length > 1) && (
+        <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4 mb-8">
+          {/* Selector de Años */}
+          {availableYears.length > 1 && (
+            <div className="flex items-center space-x-2">
+              <label htmlFor="year-filter" className="text-gray-700 dark:text-gray-300 font-semibold">Año:</label>
+              <select
+                id="year-filter"
+                value={selectedYear}
+                onChange={(e) => setSelectedYear(e.target.value)}
+                className="p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              >
+                {availableYears.map(year => (
+                  <option key={year} value={year}>{year}</option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          {/* Selector de Tipos de Actividad */}
+          {availableTypes.length > 1 && (
+            <div className="flex items-center space-x-2">
+              <label htmlFor="type-filter" className="text-gray-700 dark:text-gray-300 font-semibold">Tipo:</label>
+              <select
+                id="type-filter"
+                value={selectedType}
+                onChange={(e) => setSelectedType(e.target.value)}
+                className="p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              >
+                {availableTypes.map(type => (
+                  <option key={type} value={type}>{type}</option>
+                ))}
+              </select>
+            </div>
+          )}
         </div>
       )}
 
@@ -173,9 +204,9 @@ export default function ActividadesPage() {
         <p className="text-center text-red-500 dark:text-red-400">Error: {error}</p>
       )}
 
-      {!loading && !error && filteredActividades.length === 0 && selectedYear !== "Todos los años" && (
+      {!loading && !error && filteredActividades.length === 0 && (
         <p className="text-center text-gray-500 dark:text-gray-400">
-          No hay actividades registradas para el año {selectedYear}.
+          No hay actividades registradas con los filtros seleccionados.
         </p>
       )}
 
