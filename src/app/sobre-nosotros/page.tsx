@@ -73,6 +73,8 @@ export default function AboutUsPage() {
         {data.ESCUDO && <ImageCard title="Escudo" src={data.ESCUDO} />}
         {data.BANDERA && <ImageCard title="Bandera" src={data.BANDERA} />}
         <Card title="Himno" content={data.HIMNO || ""} />
+        {/* Tarjeta para ver el mapa */}
+        <MapCard />
       </div>
     </div>
   );
@@ -123,6 +125,25 @@ function ImageCard({ title, src }: { title: string; src: string }) {
     <div className="bg-gray-800 rounded-xl shadow-lg p-6 flex flex-col items-center">
       <h2 className="text-2xl font-bold mb-4 border-b border-gray-600 pb-2">{title}</h2>
       <Image src={src} alt={title} width={200} height={200} className="rounded-lg shadow" />
+    </div>
+  );
+}
+
+// Agrega este componente al final del archivo
+function MapCard() {
+  return (
+    <div className="bg-gray-800 rounded-xl shadow-lg p-6 flex flex-col items-center justify-center">
+      <h2 className="text-2xl font-bold mb-4 border-b border-gray-600 pb-2">Mapa</h2>
+      <iframe
+        title="Mapa ubicación"
+        src="https://www.google.com/maps?q=4.311750, -74.800842&z=16&output=embed"
+        width={250}
+        height={250}
+        style={{ border: 0, borderRadius: '0.75rem', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}
+        allowFullScreen
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+      />
     </div>
   );
 }
