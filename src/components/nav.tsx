@@ -13,12 +13,9 @@ export default function Nav() {
 
   const navLinks = [
     { href: "/", text: "Inicio" },
-    { href: "/sobre-nosotros", text: "Sobre nosotros" },
     { href: "/proyectos", text: "Proyectos" },
-    { href: "/equipo", text: "Equipo de Dignatarios" },
-    { href: "/servicios", text: "Servicios y Trámites" },
-    { href: "/actividades", text: "Eventos y Actividades" },
-    { href: "/contacto", text: "Contacto" },
+    { href: "/tramites", text: "Trámites" },
+    { href: "/actividades", text: "Eventos y Actividades" }
   ];
 
   const handleLinkClick = (href: string) => {

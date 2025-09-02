@@ -143,10 +143,18 @@ export default function Footer() {
             </li>
             <li>
               <a
-                href="/juntadeaccioncomunal"
+                href="/sobre-nosotros"
                 className="hover:underline text-blue-700 dark:text-blue-300"
               >
                 Sobre la Junta de Acción Comunal
+              </a>
+            </li>
+            <li>
+              <a
+                href="/equipo"
+                className="hover:underline text-blue-700 dark:text-blue-300"
+              >
+                Equipo
               </a>
             </li>
             <li>
