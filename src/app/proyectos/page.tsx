@@ -22,6 +22,8 @@ type Proyecto = {
 export default function ProyectosPage() {
   const [proyectos, setProyectos] = useState<Proyecto[]>([]);
   const [categoria, setCategoria] = useState<string | null>(null);
+  const [anio, setAnio] = useState<string | null>(null);
+  const [anios, setAnios] = useState<string[]>([]);
 
   const SHEET_URL =
     `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID_PROYECTOS}/values/${PROYECTOS_RANGE}?alt=json&key=${GOOGLE_SHEETS_API_KEY}`;
@@ -65,6 +67,8 @@ export default function ProyectosPage() {
           });
 
           setProyectos(proyectosData);
+          const aniosUnicos = [...new Set(proyectosData.map(p => p.anio).filter(a => a))].sort((a, b) => b.localeCompare(a));
+          setAnios(aniosUnicos);
         } else {
           setProyectos([]);
         }
@@ -74,11 +78,13 @@ export default function ProyectosPage() {
       }
     }
     fetchProyectos();
-  }, []);
+  }, [SHEET_URL]);
 
-  const proyectosFiltrados = proyectos.filter((p) =>
-    categoria ? p.estado === categoria : true
-  );
+  const proyectosFiltrados = proyectos.filter((p) => {
+    const filtroCategoria = categoria ? p.estado === categoria : true;
+    const filtroAnio = anio ? p.anio === anio : true;
+    return filtroCategoria && filtroAnio;
+  });
 
   const getEstadoColor = (estado: string) => {
     switch (estado) {
@@ -129,21 +135,36 @@ export default function ProyectosPage() {
         Historial de Proyectos Comunitarios
       </h1>
 
-      {/* Botones de filtro por categoría */}
-      <div className="flex justify-center flex-wrap gap-3 mb-8">
-        {["ejecutado", "postulado", "rechazado", "en proceso"].map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setCategoria(categoria === cat ? null : cat)}
-            className={`px-4 py-2 rounded-full font-semibold transition-colors ${
-              categoria === cat
-                ? "bg-[#19295A] text-white"
-                : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300"
-            }`}
+      {/* Filtros */}
+      <div className="flex justify-center flex-wrap gap-6 mb-8">
+        <div className="flex flex-col">
+          <label htmlFor="anio-select" className="font-semibold text-gray-700 dark:text-gray-300 mb-1">Año:</label>
+          <select
+            id="anio-select"
+            value={anio || ""}
+            onChange={(e) => setAnio(e.target.value || null)}
+            className="px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
           >
-            {formatEstado(cat)}
-          </button>
-        ))}
+            <option value="">Todos los años</option>
+            {anios.map((a) => (
+              <option key={a} value={a}>{a}</option>
+            ))}
+          </select>
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="estado-select" className="font-semibold text-gray-700 dark:text-gray-300 mb-1">Estado:</label>
+          <select
+            id="estado-select"
+            value={categoria || ""}
+            onChange={(e) => setCategoria(e.target.value || null)}
+            className="px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+          >
+            <option value="">Todos los estados</option>
+            {["ejecutado", "postulado", "rechazado", "en proceso"].map((cat) => (
+              <option key={cat} value={cat}>{formatEstado(cat)}</option>
+            ))}
+          </select>
+        </div>
       </div>
 
       {/* Grid de proyectos */}

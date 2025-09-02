@@ -53,6 +53,21 @@ export default function ServiciosTramitesPage() {
             Solicitar Préstamo
           </Link>
         </div>
+        {/* Tarjeta de Gestiones */}
+        <div className="bg-gray-800 rounded-xl shadow-lg p-8 flex flex-col items-center">
+          <h2 className="text-2xl font-bold mb-4 border-b border-gray-600 pb-2 text-white">
+            Gestiones
+          </h2>
+          <p className="text-gray-300 text-center mb-4">
+            Realiza tus gestiones y solicitudes aquí.
+          </p>
+          <Link
+            href="/servicios/gestiones"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition-transform hover:scale-105"
+          >
+            Ir a Gestiones
+          </Link>
+        </div>
         {/* Puedes agregar más tarjetas aquí */}
       </div>
     </div>
