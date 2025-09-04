@@ -39,8 +39,39 @@ export default function Nav() {
       text: "Presidencia",
       href: "/presidencia",
       dropdown: [
-        { href: "/presidencia/proyectos", text: "Proyectos" },
-        { href: "/presidencia/plan-desarrollo", text: "Plan de desarrollo 2022-2026" },
+        {
+          text: "Proyectos",
+          href: "/presidencia/proyectos",
+          dropdown: [
+            { href: "/presidencia/proyectos/2022", text: "2022" },
+            { href: "/presidencia/proyectos/2023", text: "2023" },
+            { href: "/presidencia/proyectos/2024", text: "2024" },
+            { href: "/presidencia/proyectos/2025", text: "2025" },
+            { href: "/presidencia/proyectos/2026", text: "2026" },
+          ]
+        },
+        {
+          text: "Gestiones Realizadas",
+          href: "/presidencia/gestiones-realizadas",
+          dropdown: [
+            { href: "/presidencia/gestiones-realizadas/2022", text: "2022" },
+            { href: "/presidencia/gestiones-realizadas/2023", text: "2023" },
+            { href: "/presidencia/gestiones-realizadas/2024", text: "2024" },
+            { href: "/presidencia/gestiones-realizadas/2025", text: "2025" },
+            { href: "/presidencia/gestiones-realizadas/2026", text: "2026" },
+          ]
+        },
+        {
+          text: "Plan de desarrollo 2022-2026",
+          href: "/presidencia/plan-desarrollo",
+          dropdown: [
+            { href: "/presidencia/plan-desarrollo/2022", text: "Plan de Acción 2022" },
+            { href: "/presidencia/plan-desarrollo/2023", text: "Plan de Acción 2023" },
+            { href: "/presidencia/plan-desarrollo/2024", text: "Plan de Acción 2024" },
+            { href: "/presidencia/plan-desarrollo/2025", text: "Plan de Acción 2025" },
+            { href: "/presidencia/plan-desarrollo/2026", text: "Plan de Acción 2026" },
+          ]
+        },
         {
           text: "Citación a",
           dropdown: [
@@ -54,6 +85,7 @@ export default function Nav() {
           dropdown: [
             { href: "/presidencia/actos/ordenacion-gasto", text: "Ordenacion del Gasto" },
             { href: "/presidencia/actos/resoluciones", text: "Resoluciones" },
+            { href: "/presidencia/actos/informes", text: "Informes y Rendición de Cuentas" },
             { href: "/presidencia/actos/constancias-residencia", text: "Constancias de Residencia" },
             { href: "/presidencia/actos/comunicados", text: "Comunicados" },
             { href: "/presidencia/actos/circulares", text: "Circulares" },
@@ -62,6 +94,20 @@ export default function Nav() {
         },
       ],
     },
+    {
+      text: "Vicepresidencia",
+      href: "/vicepresidencia",
+      dropdown: [
+        { 
+          text: "Comisiones de Trabajo",
+          dropdown: [
+            { href: "/vicepresidencia/comisiones-de-trabajo/bienestar", text: "Comisión de Bienestar y Participación Comunitaria" },
+            { href: "/vicepresidencia/comisiones-de-trabajo/desarrollo-social", text: "Comisión de Desarrollo Social Comunitario" },
+            { href: "/vicepresidencia/comisiones-de-trabajo/desarrollo-urbano", text: "Comisión de Desarrollo Urbano y Medio Ambiente" },
+          ]
+        },
+      ]
+    }
   ];
 
   // Logic to handle clicks for both desktop and mobile menus
@@ -94,7 +140,8 @@ export default function Nav() {
             <span className="ml-2 text-xs">▶</span>
           </button>
           {isOpen && (
-            <div className={`absolute z-20 w-72 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 ${isNested ? 'top-0 left-full ml-1' : 'top-full mt-2'}`}>
+            // All dropdowns now open vertically
+            <div className={`absolute z-30 w-72 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 ${isNested ? 'top-full left-0 mt-1' : 'top-full mt-2'}`}>
               {item.dropdown.map(nestedItem => renderMenuItem(nestedItem, true))}
             </div>
           )}
@@ -166,7 +213,7 @@ export default function Nav() {
               {navLinks.map((link) => (
                 <div
                   key={link.text}
-                  className="relative z-20" // Adjusted z-index here
+                  className="relative z-20"
                 >
                   {link.dropdown ? (
                     <button
