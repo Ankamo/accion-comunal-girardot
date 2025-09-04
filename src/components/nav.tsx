@@ -25,8 +25,6 @@ export default function Nav() {
   const [activeDropdown, setActiveDropdown] = useState<string[]>([]);
   const router = useRouter();
 
-  const btnDestacado = "px-4 py-1 rounded-md font-semibold text-white bg-blue-700 hover:bg-blue-800 dark:bg-blue-500 dark:hover:bg-blue-600 transition";
-
   const handleLinkClick = (href: string) => {
     setMenuAbierto(false);
     setActiveDropdown([]);
@@ -44,7 +42,7 @@ export default function Nav() {
           href: "/presidencia/proyectos",
           dropdown: [
             { href: "/presidencia/proyectos/2022", text: "2022" },
-            { href: "/presidencia/proyectos/2023", text: "2023" },
+            { href: "/presidencia/proyectos/22023", text: "2023" },
             { href: "/presidencia/proyectos/2024", text: "2024" },
             { href: "/presidencia/proyectos/2025", text: "2025" },
             { href: "/presidencia/proyectos/2026", text: "2026" },
@@ -98,7 +96,11 @@ export default function Nav() {
       text: "Vicepresidencia",
       href: "/vicepresidencia",
       dropdown: [
-        { 
+        { href: "/vicepresidencia/proyectos", text: "Proyectos" },
+        { href: "/vicepresidencia/gestiones", text: "Gestiones Realizadas" },
+        { href: "/vicepresidencia/plan-desarrollo", text: "Plan de Desarrollo" },
+        { href: "/vicepresidencia/informes", text: "Informes de Gestión" },
+        {
           text: "Comisiones de Trabajo",
           dropdown: [
             { href: "/vicepresidencia/comisiones-de-trabajo/bienestar", text: "Comisión de Bienestar y Participación Comunitaria" },
@@ -107,7 +109,21 @@ export default function Nav() {
           ]
         },
       ]
-    }
+    },
+    { href: "/tesoreria", text: "Tesorería" },
+    { href: "/secretaria", text: "Secretaría" },
+    {
+      text: "Fiscal",
+      href: "/fiscal",
+      dropdown: [
+        { href: "/fiscal/informes", text: "Informes" },
+        { href: "/fiscal/denuncias", text: "Denuncias" },
+      ]
+    },
+    { href: "/delegacion", text: "Delegación" },
+    { href: "/comision-convivencia", text: "Comisión de Convivencia" },
+    { href: "/afiliate", text: "Afíliate / Inscríbete" },
+    { href: "/panel", text: "Panel de Afiliados" },
   ];
 
   // Logic to handle clicks for both desktop and mobile menus
@@ -131,7 +147,7 @@ export default function Nav() {
     if (item.dropdown) {
       const isOpen = isDropdownActive(item.text);
       return (
-        <div key={item.text} className="relative z-20">
+        <div key={item.text} className={`relative z-20 ${isNested ? 'w-full' : ''}`}>
           <button
             onClick={() => handleDropdownClick(item.text)}
             className={`w-full flex justify-between items-center px-4 py-2 text-sm text-left text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 ${isNested ? '' : 'font-semibold'}`}
@@ -141,7 +157,7 @@ export default function Nav() {
           </button>
           {isOpen && (
             // All dropdowns now open vertically
-            <div className={`absolute z-30 w-72 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 ${isNested ? 'top-full left-0 mt-1' : 'top-full mt-2'}`}>
+            <div className={`absolute z-30 w-72 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 ${isNested ? 'top-0 left-full ml-1' : 'top-full mt-2'}`}>
               {item.dropdown.map(nestedItem => renderMenuItem(nestedItem, true))}
             </div>
           )}
@@ -242,24 +258,7 @@ export default function Nav() {
           </div>
 
           <div className="flex-1 flex justify-end items-center">
-            <div className="hidden md:flex items-center space-x-4">
-                <Link href="/afiliate" className={btnDestacado}>
-                  Afíliate / Inscríbete
-                </Link>
-                <Link href="/panel" className={`${btnDestacado} bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600`}>
-                  Panel de Afiliados
-                </Link>
-            </div>
-            <div className="md:hidden">
-              <button
-                onClick={() => setMenuAbierto(!menuAbierto)}
-                aria-label="Abrir menú de navegación"
-                aria-expanded={menuAbierto}
-                className="text-[#19295A] dark:text-white focus:outline-none text-2xl"
-              >
-                {menuAbierto ? "✖" : "☰"}
-              </button>
-            </div>
+            {/* Se removieron los botones para convertirlos en enlaces de navegación */}
           </div>
         </div>
       </div>
@@ -267,14 +266,7 @@ export default function Nav() {
       {menuAbierto && (
         <div className="md:hidden px-4 pb-6 text-sm space-y-2 bg-white dark:bg-[#23232a] border-t border-gray-200 dark:border-gray-700 z-30">
           {navLinks.map(renderMobileMenuItem)}
-          <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 space-y-2">
-            <Link href="/afiliate" className={`${btnDestacado} block text-center`} onClick={() => handleLinkClick("/afiliate")}>
-              Afíliate / Inscríbete
-            </Link>
-            <Link href="/panel" className={`${btnDestacado} bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 block text-center`} onClick={() => handleLinkClick("/panel")}>
-              Panel de Afiliados
-            </Link>
-          </div>
+          {/* Se removieron los botones para convertirlos en enlaces de navegación */}
         </div>
       )}
     </nav>
