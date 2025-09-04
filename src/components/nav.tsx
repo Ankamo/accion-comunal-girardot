@@ -121,9 +121,9 @@ export default function Nav() {
       ]
     },
     { href: "/delegacion", text: "Delegación" },
-    { href: "/comision-convivencia", text: "Comisión de Convivencia" },
-    { href: "/afiliate", text: "Afíliate / Inscríbete" },
-    { href: "/panel", text: "Panel de Afiliados" },
+    { href: "/comision-convivencia", text: "Convivencia y Conciliación" },
+    { href: "/afiliate", text: "Afíliate" },
+    { href: "/panel", text: "Ingresar" },
   ];
 
   // Logic to handle clicks for both desktop and mobile menus
@@ -215,50 +215,36 @@ export default function Nav() {
   return (
     <nav className="w-full bg-white dark:bg-[#23232a] border-b border-gray-200 dark:border-gray-700 shadow-sm z-10">
       <div className="max-w-6xl mx-auto px-4">
-        <div className="flex items-center h-12">
-          <div className="flex-1 flex justify-start">
-            <div className="text-[#19295A] dark:text-white font-bold text-lg cursor-pointer">
-              <Link href="/" onClick={() => setMenuAbierto(false)}>
-                JAC Rosa Blanca
-              </Link>
-            </div>
-          </div>
-
-          <div className="flex-1 flex justify-center">
-            <div className="hidden md:flex space-x-8 text-sm items-center">
-              {navLinks.map((link) => (
-                <div
-                  key={link.text}
-                  className="relative z-20"
-                >
-                  {link.dropdown ? (
-                    <button
-                      onClick={() => handleDropdownClick(link.text)}
-                      className="font-semibold hover:text-blue-700 dark:hover:text-blue-300 focus:outline-none"
-                    >
-                      {link.text}
-                    </button>
-                  ) : (
-                    <Link
-                      href={link.href}
-                      className="font-semibold hover:text-blue-700 dark:hover:text-blue-300 focus:outline-none"
-                      onClick={() => handleLinkClick(link.href)}
-                    >
-                      {link.text}
-                    </Link>
-                  )}
-                  {link.dropdown && isDropdownActive(link.text) && (
-                    <div className="absolute z-30 mt-2 w-72 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1">
-                      {link.dropdown.map(item => renderMenuItem(item, true))}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex-1 flex justify-end items-center">
-            {/* Se removieron los botones para convertirlos en enlaces de navegación */}
+        <div className="flex items-center justify-center h-12">
+          <div className="flex space-x-8 text-sm items-center">
+            {navLinks.map((link) => (
+              <div
+                key={link.text}
+                className="relative z-20"
+              >
+                {link.dropdown ? (
+                  <button
+                    onClick={() => handleDropdownClick(link.text)}
+                    className="font-semibold hover:text-blue-700 dark:hover:text-blue-300 focus:outline-none"
+                  >
+                    {link.text}
+                  </button>
+                ) : (
+                  <Link
+                    href={link.href}
+                    className="font-semibold hover:text-blue-700 dark:hover:text-blue-300 focus:outline-none"
+                    onClick={() => handleLinkClick(link.href)}
+                  >
+                    {link.text}
+                  </Link>
+                )}
+                {link.dropdown && isDropdownActive(link.text) && (
+                  <div className="absolute z-30 mt-2 w-72 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1">
+                    {link.dropdown.map(item => renderMenuItem(item, true))}
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -266,7 +252,6 @@ export default function Nav() {
       {menuAbierto && (
         <div className="md:hidden px-4 pb-6 text-sm space-y-2 bg-white dark:bg-[#23232a] border-t border-gray-200 dark:border-gray-700 z-30">
           {navLinks.map(renderMobileMenuItem)}
-          {/* Se removieron los botones para convertirlos en enlaces de navegación */}
         </div>
       )}
     </nav>
