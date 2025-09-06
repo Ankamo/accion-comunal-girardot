@@ -120,8 +120,24 @@ export default function Nav() {
         { href: "/fiscal/denuncias", text: "Denuncias" },
       ]
     },
-    { href: "/delegacion", text: "Delegación" },
-    { href: "/comision-convivencia", text: "Convivencia y Conciliación" },
+    {
+      text: "Delegación",
+      href: "/delegacion",
+      dropdown: [
+        { href: "/delegacion/informes-asojuntas", text: "Informes Asojuntas" },
+      ]
+    },
+    {
+      text: "Comisión de Convivencia",
+      href: "/comision-convivencia",
+      dropdown: [
+        { href: "/comision-convivencia/procesos-investigativos", text: "Procesos Investigativos" },
+        { href: "/comision-convivencia/procesos-declarativo", text: "Procesos Declarativo" },
+        { href: "/comision-convivencia/actas", text: "Actas" },
+        { href: "/comision-convivencia/correspondencia", text: "Correspondencia" },
+        { href: "/comision-convivencia/accion-de-tutelas", text: "Acción de Tutelas" },
+      ],
+    },
     { href: "/afiliate", text: "Afíliate" },
     { href: "/panel", text: "Ingresar" },
   ];
