@@ -1,10 +1,23 @@
-export default function AsambleaGeneralPage() {
-  return (
-    <main className="flex min-h-screen flex-col items-center p-24">
-      <div className="z-10 w-full max-w-5xl items-center font-mono text-sm">
-        <h1 className="text-4xl font-bold text-center mb-8">Citación a Asamblea General de Afiliados</h1>
-        <p className="text-center text-lg">Página en construcción.</p>
-      </div>
-    </main>
-  );
+// Este código es solo un ejemplo de la lógica.
+// Necesitarías configurar la API y la autenticación primero.
+
+import { google } from 'googleapis';
+
+async function getDriveFiles() {
+  const drive = google.drive({
+    version: 'v3',
+    // Aquí irían tus credenciales de API
+  });
+
+  const folderId = '159uKq-e2L9QGlqVkg-bbo-KhC84RsZ-f';
+  
+  const response = await drive.files.list({
+    q: `'${folderId}' in parents`,
+    fields: 'files(id, name, thumbnailLink, webContentLink)',
+  });
+  
+  return response.data.files;
 }
+
+// Luego, en tu componente, llamarías a esta función para obtener los datos
+// y los mostrarías en una lista o galería.

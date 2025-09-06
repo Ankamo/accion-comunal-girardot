@@ -40,24 +40,12 @@ export default function Nav() {
         {
           text: "Proyectos",
           href: "/presidencia/proyectos",
-          dropdown: [
-            { href: "/presidencia/proyectos/2022", text: "2022" },
-            { href: "/presidencia/proyectos/22023", text: "2023" },
-            { href: "/presidencia/proyectos/2024", text: "2024" },
-            { href: "/presidencia/proyectos/2025", text: "2025" },
-            { href: "/presidencia/proyectos/2026", text: "2026" },
-          ]
+          dropdown: undefined
         },
         {
           text: "Gestiones Realizadas",
           href: "/presidencia/gestiones-realizadas",
-          dropdown: [
-            { href: "/presidencia/gestiones-realizadas/2022", text: "2022" },
-            { href: "/presidencia/gestiones-realizadas/2023", text: "2023" },
-            { href: "/presidencia/gestiones-realizadas/2024", text: "2024" },
-            { href: "/presidencia/gestiones-realizadas/2025", text: "2025" },
-            { href: "/presidencia/gestiones-realizadas/2026", text: "2026" },
-          ]
+          dropdown: undefined // Se ha eliminado el dropdown
         },
         {
           text: "Plan de desarrollo 2022-2026",
@@ -96,9 +84,6 @@ export default function Nav() {
       text: "Vicepresidencia",
       href: "/vicepresidencia",
       dropdown: [
-        { href: "/vicepresidencia/proyectos", text: "Proyectos" },
-        { href: "/vicepresidencia/gestiones", text: "Gestiones Realizadas" },
-        { href: "/vicepresidencia/plan-desarrollo", text: "Plan de Desarrollo" },
         { href: "/vicepresidencia/informes", text: "Informes de Gestión" },
         {
           text: "Comisiones de Trabajo",
@@ -207,7 +192,7 @@ export default function Nav() {
           </button>
           {isOpen && (
             <div className="pl-4 mt-2 space-y-1 border-l-2 border-gray-200 dark:border-gray-700">
-              {item.href && <a href={item.href} onClick={(e) => { e.preventDefault(); handleLinkClick(item.href!);}} className="block px-2 py-1 font-semibold hover:text-blue-700 dark:hover:text-blue-300">Página Principal</a>}
+              {item.href && <a href={item.href} onClick={(e) => { e.preventDefault(); handleLinkClick(item.href!); }} className="block px-2 py-1 font-semibold hover:text-blue-700 dark:hover:text-blue-300">Página Principal</a>}
               {item.dropdown.map(nestedItem => renderMenuItem(nestedItem, true))}
             </div>
           )}
