@@ -29,6 +29,11 @@ export const SHEET_NAME_ASAMBLEA = 'CitacionAsambleaGeneral'; // Asegúrate de q
 export const SPREADSHEET_ID_REUNION_DIRECTIVOS = '1PR46lMH-1eTVhpVTL8hf0enK5eAX4i6X8_XEBN3rNUM';
 export const SHEET_NAME_REUNION_DIRECTIVOS = 'CitacionReunionDignatarios'; // Asegúrate de que este sea el nombre correcto de tu pestaña
 
+// src/app/presidencia/citaciones/asamblea-general/
+export const SPREADSHEET_ID_ASAMBLEA_RESIDENTES = '1WQCku68N6hVLzvLSv-lQzhl5LvIGDninKOwqnNnbUlc';
+export const SHEET_NAME_ASAMBLEA_RESIDENTES = 'CitacionAsambleaResidentes'; // Asegúrate de que este sea el nombre correcto de tu pestaña
+
+
 
 
 
