@@ -69,8 +69,8 @@ export default function AsambleaGeneralPage() {
                 return "";
               };
 
-              const fecha = pick("FECHA"); // Columna D
-              const hora = pick("HORA");   // Columna E
+              const fecha = pick("FECHA");
+              const hora = pick("HORA");
               const lugar = pick("LUGAR");
               const orden = pick("ORDEN DEL DIA", "ORDEN DEL DÍA", "ORDEN", "AGENDA");
               const documento = pick("DOCUMENTO", "ENLACE", "LINK", "CITACION");
@@ -78,7 +78,6 @@ export default function AsambleaGeneralPage() {
               const estado = pick("ESTADO");
               const tipoReunion = pick("TIPO DE REUNION");
 
-              // Extraer año de la fecha
               const matchYear = (fecha || "").match(/(19|20)\d{2}/);
               const anio = matchYear ? matchYear[0] : "";
 
@@ -96,10 +95,10 @@ export default function AsambleaGeneralPage() {
                 anio,
               };
             })
+            // 🔹 Excluir citaciones "SIN PROGRAMAR"
             .filter((c: Citacion) =>
-              Boolean(
-                c.fecha || c.hora || c.lugar || c.finalidad || c.estado || (c.documento && c.documento !== "#")
-              )
+              c.estado?.toUpperCase() !== "SIN PROGRAMAR" &&
+              (c.fecha || c.hora || c.lugar || c.finalidad || c.estado || (c.documento && c.documento !== "#"))
             );
 
           setCitaciones(citacionesData);
@@ -201,6 +200,12 @@ export default function AsambleaGeneralPage() {
 
       {/* Listado */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {citacionesFiltradas.length === 0 && (
+          <p className="col-span-full text-center text-gray-500 dark:text-gray-400">
+            No hay citaciones registradas en este filtro.
+          </p>
+        )}
+
         {citacionesFiltradas.map((cita: Citacion, idx: number) => {
           let fechaBonita = cita.fecha || "Por definir";
           const horaBonita = cita.hora || "Por definir";
@@ -259,12 +264,6 @@ export default function AsambleaGeneralPage() {
             </div>
           );
         })}
-
-        {citacionesFiltradas.length === 0 && (
-          <p className="col-span-full text-center text-gray-500 dark:text-gray-400">
-            No hay citaciones registradas en este filtro.
-          </p>
-        )}
       </div>
     </div>
   );
