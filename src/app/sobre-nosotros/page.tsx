@@ -90,7 +90,7 @@ function Card({
   isList?: boolean;
 }) {
   // Si el contenido es una ruta a proyectos
-  if (content.trim() === "/proyectos") {
+  if (content.trim() === "/presidencia/proyectos") {
     return (
       <div className="bg-gray-800 rounded-xl shadow-lg p-6 flex flex-col items-center justify-center">
         <h2 className="text-2xl font-bold mb-4 border-b border-gray-600 pb-2">{title}</h2>
