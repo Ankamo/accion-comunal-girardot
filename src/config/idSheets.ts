@@ -13,6 +13,11 @@ export const SHEET_NAME_HEADER = 'Header'; // Asegúrate de que este sea el nomb
 export const SHEET_NAME_FOOTER = 'Footer'; // Asegúrate de que este sea el nombre correcto de tu pestaña
 export const SHEET_NAME_REDES = 'Redes Sociales'; // Asegúrate de que este sea el nombre correcto de tu pestaña
 
+//Usuarios
+export const SPREADSHEET_ID_USUARIOS = '1eXaCAyfkWY1ac-5KitWPKETMoSvAzuyp_NVZfYH5NDI';
+export const SHEET_NAME_USUARIOS = "Usuarios";
+export const RANGE_USUARIOS = `${SHEET_NAME_USUARIOS}!A1:C`;
+
 // src/app/
 export const SPREADSHEET_ID_CARTELERA = '18At-UfafKNT-bPo1cK69ScHaf07E1yUKELYO6TWfSeo';
 export const SHEET_NAME_CARTELERA = 'Cartelera'; // Asegúrate de que este sea el nombre correcto de tu pestaña
