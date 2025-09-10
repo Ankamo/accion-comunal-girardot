@@ -127,7 +127,7 @@ export default function Footer() {
           <ul className="text-base text-gray-700 dark:text-gray-200 space-y-1">
             <li>
               <a
-                href="/terminos"
+                href="/enlaces/terminos"
                 className="hover:underline text-blue-700 dark:text-blue-300"
               >
                 Términos y Condiciones
@@ -135,7 +135,7 @@ export default function Footer() {
             </li>
             <li>
               <a
-                href="/privacidad"
+                href="/enlaces/privacidad"
                 className="hover:underline text-blue-700 dark:text-blue-300"
               >
                 Política de Privacidad
@@ -143,7 +143,7 @@ export default function Footer() {
             </li>
             <li>
               <a
-                href="/sobre-nosotros"
+                href="/enlaces/sobre-nosotros"
                 className="hover:underline text-blue-700 dark:text-blue-300"
               >
                 Sobre la Junta de Acción Comunal
@@ -151,7 +151,7 @@ export default function Footer() {
             </li>
             <li>
               <a
-                href="/equipo"
+                href="/enlaces/equipo"
                 className="hover:underline text-blue-700 dark:text-blue-300"
               >
                 Equipo
@@ -159,7 +159,7 @@ export default function Footer() {
             </li>
             <li>
               <a
-                href="/contacto"
+                href="/enlaces/contacto"
                 className="hover:underline text-blue-700 dark:text-blue-300"
               >
                 Contacto
@@ -167,7 +167,7 @@ export default function Footer() {
             </li>
             <li>
               <a
-                href="/pqrs"
+                href="/enlaces/pqrs"
                 className="hover:underline text-blue-700 dark:text-blue-300"
               >
                 PQRS
