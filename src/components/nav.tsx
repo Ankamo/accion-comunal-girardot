@@ -83,11 +83,12 @@ export default function Nav() {
                     text: "Plan de desarrollo 2022-2026",
                     href: "/presidencia/plan-desarrollo",
                     dropdown: [
-                        { href: "/presidencia/plan-desarrollo/2022", text: "Plan de Acción 2022" },
-                        { href: "/presidencia/plan-desarrollo/2023", text: "Plan de Acción 2023" },
-                        { href: "/presidencia/plan-desarrollo/2024", text: "Plan de Acción 2024" },
-                        { href: "/presidencia/plan-desarrollo/2025", text: "Plan de Acción 2025" },
-                        { href: "/presidencia/plan-desarrollo/2026", text: "Plan de Acción 2026" },
+                        { href: "/presidencia/pdcc-2022-2026", text: "Plan de Desarrollo Comunal y Comunitario 2022-2026" },
+                        { href: "/presidencia/plan-accion/2022", text: "Plan de Acción 2022" },
+                        { href: "/presidencia/plan-accion/2023", text: "Plan de Acción 2023" },
+                        { href: "/presidencia/plan-accion/2024", text: "Plan de Acción 2024" },
+                        { href: "/presidencia/plan-accion/2025", text: "Plan de Acción 2025" },
+                        { href: "/presidencia/plan-accion/2026", text: "Plan de Acción 2026" },
                     ]
                 },
                 {
