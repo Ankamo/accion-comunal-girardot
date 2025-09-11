@@ -39,7 +39,7 @@ export const SPREADSHEET_ID_ASAMBLEA_RESIDENTES = '1WQCku68N6hVLzvLSv-lQzhl5LvIG
 export const SHEET_NAME_ASAMBLEA_RESIDENTES = 'CitacionAsambleaResidentes'; // Asegúrate de que este sea el nombre correcto de tu pestaña
 
 // src/app/presidencia/gestiones-realizadas/
-export const SPREADSHEET_ID_GESTIONES = '/1EAVnNF9VTYRwcS-84vmcFmcqq-UGcQ8bquH1mnPSSnw';
+export const SPREADSHEET_ID_GESTIONES = '1EAVnNF9VTYRwcS-84vmcFmcqq-UGcQ8bquH1mnPSSnw';
 export const SHEET_NAME_GESTIONES = 'Gestiones'; // Asegúrate de que este sea el nombre correcto de tu pestaña
 
 
