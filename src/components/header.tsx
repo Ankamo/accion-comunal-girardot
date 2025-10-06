@@ -1,15 +1,18 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import GOOGLE_SHEETS_API_KEY from "@/config/googleApiKey";
 import { SPREADSHEET_ID, SHEET_NAME_HEADER } from "@/config/idSheets";
-import { MapPin, Clock } from "lucide-react";
-import Link from "next/link";
+import LogoIzq from "@/components/header/LogoIzq";
+import LogoDer from "@/components/header/LogoDer";
+import Contenido from "@/components/header/Contenido";
+import HoraActual from "@/components/header/HoraActual";
+import CiudadActual from "@/components/header/CiudadActual";
 
-const HEADER_RANGE = `${SHEET_NAME_HEADER}!A2:M2`;
+const HEADER_RANGE = `${SHEET_NAME_HEADER}!A2:N2`;
 
 type HeaderData = {
+  id: string;
   TipoOac: string;
   TipoUrbanismo: string;
   NombreOac: string;
@@ -27,25 +30,24 @@ type HeaderData = {
 
 function parseHeaderRow(row: string[]): HeaderData {
   return {
-    TipoOac: row[0] || "",
-    TipoUrbanismo: row[1] || "",
-    NombreOac: row[2] || "",
-    Lema: row[3] || "",
-    NumeroNit: row[4] || "",
-    NumeroPersoneria: row[5] || "",
-    FechaPersoneria: row[6] || "",
-    ExpedidoPor: row[7] || "",
-    NumeroRuc: row[8] || "",
-    Ciudad: row[9] || "",
-    Departamento: row[10] || "",
-    LogoDer: row[11] || "",
-    LogoIzq: row[12] || "",
+    id: row[0] || "",
+    TipoOac: row[1] || "",
+    TipoUrbanismo: row[2] || "",
+    NombreOac: row[3] || "",
+    Lema: row[4] || "",
+    NumeroNit: row[5] || "",
+    NumeroPersoneria: row[6] || "",
+    FechaPersoneria: row[7] || "",
+    ExpedidoPor: row[8] || "",
+    NumeroRuc: row[9] || "",
+    Ciudad: row[10] || "",
+    Departamento: row[11] || "",
+    LogoDer: row[12] || "",
+    LogoIzq: row[13] || "",
   };
 }
 
 export default function Header() {
-  const [hora, setHora] = useState("");
-  const [ciudad, setCiudad] = useState("...");
   const [header, setHeader] = useState<HeaderData | null>(null);
 
   useEffect(() => {
@@ -64,41 +66,6 @@ export default function Header() {
     fetchHeader();
   }, []);
 
-  useEffect(() => {
-    const updateHora = () => {
-      const now = new Date();
-      setHora(
-        now.toLocaleTimeString("es-CO", {
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        })
-      );
-    };
-    updateHora();
-    const interval = setInterval(updateHora, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        async (pos) => {
-          try {
-            const res = await fetch(
-              `https://nominatim.openstreetmap.org/reverse?format=json&lat=${pos.coords.latitude}&lon=${pos.coords.longitude}`
-            );
-            const data = await res.json();
-            setCiudad(data.address?.city || data.address?.town || data.address?.village || "Ubicación");
-          } catch {
-            setCiudad("Ubicación desconocida");
-          }
-        },
-        () => setCiudad("Permiso denegado")
-      );
-    }
-  }, []);
-
   const nombreOac = header
     ? [header.TipoOac, header.TipoUrbanismo, header.NombreOac].filter(Boolean).join(" ")
     : "Junta de Acción Comunal";
@@ -107,52 +74,28 @@ export default function Header() {
     <header className="w-full bg-white dark:bg-[#23232a] shadow-md border-b border-gray-200 dark:border-gray-700">
       {/* Barra superior */}
       <div className="bg-gray-800 text-white text-xs flex justify-between px-4 py-1">
-        <span className="flex items-center gap-1"><MapPin size={14} /> {ciudad}</span>
-        <span className="flex items-center gap-1"><Clock size={14} /> {hora}</span>
+        <CiudadActual />
+        <HoraActual />
       </div>
 
       {/* Contenido principal */}
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between py-3 px-4 gap-3">
-        {/* Contenido principal */}
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between py-3 px-4 gap-3">
-          {/* Logo Izquierdo con link a "/" */}
-          <Link href="/" aria-label="Inicio">
-            <Image
-              src={header?.LogoIzq || "/LogoJac.png"}
-              alt="Logo Izquierdo"
-              width={90}
-              height={90}
-              className="object-contain cursor-pointer transition-transform duration-300 hover:scale-105"
-            />
-          </Link>
-
-          {/* Texto Central */}
-          <div className="flex flex-col items-center text-center">
-            <h1 className="text-lg md:text-2xl font-bold text-gray-900 dark:text-white">{nombreOac}</h1>
-            <p className="italic text-sm md:text-base text-gray-700 dark:text-gray-300">{header?.Lema || "Trabajando por la comunidad"}</p>
-            <div className="text-xs text-gray-600 dark:text-gray-400 leading-tight">
-              <div>{header?.NumeroNit && `NIT: ${header.NumeroNit}`}</div>
-              <div>{header?.NumeroPersoneria && `Personería Jurídica ${header.NumeroPersoneria}`}</div>
-              <div>{header?.NumeroRuc && `RUC: ${header.NumeroRuc}`}</div>
-              <div>{header?.Ciudad}, {header?.Departamento}</div>
-            </div>
-          </div>
-
-          {/* Logo Derecho con link a Confederación en pestaña nueva */}
-          <a
-            href="https://confederacionnacionaldeaccioncomunal.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Confederación Nacional de Acción Comunal"
-          >
-            <Image
-              src={header?.LogoDer || "/LogoComunal.png"}
-              alt="Logo Derecho"
-              width={70}
-              height={70}
-              className="object-contain cursor-pointer transition-transform duration-300 hover:scale-110"
-            />
-          </a>
+        <div className="flex flex-1 justify-center md:justify-end">
+          <LogoIzq src={header?.LogoIzq} />
+        </div>
+        <div className="flex-1 flex justify-center">
+          <Contenido
+            nombreOac={nombreOac}
+            lema={header?.Lema}
+            numeroNit={header?.NumeroNit}
+            numeroPersoneria={header?.NumeroPersoneria}
+            numeroRuc={header?.NumeroRuc}
+            ciudad={header?.Ciudad}
+            departamento={header?.Departamento}
+          />
+        </div>
+        <div className="flex flex-1 justify-center md:justify-start">
+          <LogoDer src={header?.LogoDer} />
         </div>
       </div>
     </header>
