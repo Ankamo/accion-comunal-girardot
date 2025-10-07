@@ -3,7 +3,6 @@ import '@/styles/globals.css'
 import Header from '@/components/header'
 import Nav from '@/components/nav'
 import Footer from '@/components/footer'
-//import Permisos from '@/components/permisos'   // 👈 nuevo
 
 export const metadata = {
   title: 'Junta de Acción Comunal del Barrio de Rosa Blanca',
@@ -40,7 +39,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="es" className="scroll-smooth">
       <body className="min-h-screen bg-[#f5f6fa] text-[#18181b] dark:bg-[#18181b] dark:text-[#f5f6fa] font-sans antialiased transition-colors duration-300">
         {/* 👇 El modal de permisos debe ir dentro del body */}
-        {/* <Permisos /> */}
         <Header />
         <Nav />
         <main>{children}</main>
